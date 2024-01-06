@@ -52,8 +52,7 @@ func _on_mouse_entered():
 		
 	tooltip.global_position = determineShift(direction, directionalMargin, tooltip.size, position_from.size)
 
-	print_debug(tooltip.global_position)
-
+	position_from.add_child(tooltip)
 	pass
 
 func _on_mouse_exited():
