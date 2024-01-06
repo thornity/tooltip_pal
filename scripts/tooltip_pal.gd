@@ -8,7 +8,10 @@ extends Control
 enum DirectionEnum {UP, RIGHT, DOWN, LEFT}
 @export var direction: DirectionEnum
 @export var directionalMargin: int
+## When enabled, keeps the tooltip inside the viewport
 @export var forceInBounds: bool
+## Uses the parent rect as the hover activator instead of this rect.
+@export var useParentRect : bool = true
 
 # TODO: implement
 @export var hover_time: float
@@ -19,7 +22,22 @@ var tooltip: Control
 func _ready():
 	connect("mouse_entered", _on_mouse_entered)
 	connect("mouse_exited", _on_mouse_exited)
+	switch_to_parent_rect(useParentRect)
 	pass
+
+# Changes hover activator rect to parent or self.
+func switch_to_parent_rect(value: bool):
+	if value:
+			get_parent().connect("mouse_entered", _on_mouse_entered)
+			get_parent().connect("mouse_exited", _on_mouse_exited)
+			mouse_filter = Control.MOUSE_FILTER_IGNORE
+	else:
+		# Need to check if there is a connection to prevent Error out.
+		if get_parent().is_connected("mouse_entered", _on_mouse_entered): 
+			get_parent().disconnect("mouse_entered", _on_mouse_entered)
+		if get_parent().is_connected("mouse_exited", _on_mouse_exited):
+			get_parent().disconnect("mouse_exited", _on_mouse_exited)
+		mouse_filter = Control.MOUSE_FILTER_STOP
 
 func determineShift(direction: DirectionEnum, directionalMargin: int, tooltip_panel: Vector2, parent: Vector2) -> Vector2:
 	var directionShift = Vector2(0,0)
