@@ -8,6 +8,7 @@ extends Control
 enum DirectionEnum {UP, RIGHT, DOWN, LEFT}
 @export var direction: DirectionEnum
 @export var directionalMargin: int
+@export var forceInBounds: bool
 
 # TODO: implement
 @export var hover_time: float
@@ -40,6 +41,21 @@ func determineShift(direction: DirectionEnum, directionalMargin: int, tooltip_pa
 
 	return directionShift + marginalShift
 
+# Repositions the tooltip's global position to remain within the viewport.
+func forceInsideViewport(tooltip):
+	# Calculate end position now for readability sake.
+	var tooltipEndPos = tooltip.global_position + tooltip.size
+
+	# Setting global position because we are working relative to the viewport.
+	if tooltip.global_position.x < 0: 
+		tooltip.global_position.x = 0
+	if tooltip.global_position.y < 0: 
+		tooltip.global_position.y = 0
+	if tooltipEndPos.x > get_viewport_rect().size.x: 
+		tooltip.global_position.x = get_viewport_rect().size.x - tooltip.size.x
+	if tooltipEndPos.y > get_viewport_rect().size.y:
+		tooltip.global_position.y = get_viewport_rect().size.y - tooltip.size.y
+
 func _on_mouse_entered():
 	tooltip = panel.instantiate() as Control
 	
@@ -48,11 +64,15 @@ func _on_mouse_entered():
 		pass
 	else:
 		position_from = get_parent()
-	determineShift(direction, directionalMargin, tooltip.size, position_from.size)
-		
+	
 	tooltip.global_position = determineShift(direction, directionalMargin, tooltip.size, position_from.size)
-
+	
 	position_from.add_child(tooltip)
+	
+	# Must do this repositioning after we have added it to the tree.
+	if forceInBounds: 
+		forceInsideViewport(tooltip)
+		
 	pass
 
 func _on_mouse_exited():
