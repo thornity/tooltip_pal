@@ -4,5 +4,6 @@
 z_index = 10
 offset_right = 400.0
 offset_bottom = 100.0
-size_flags_horizontal = 2
-size_flags_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
