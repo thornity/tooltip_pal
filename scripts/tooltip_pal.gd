@@ -64,17 +64,16 @@ func _on_mouse_entered():
 		pass
 	else:
 		position_from = get_parent()
-	
-	tooltip.global_position = determineShift(direction, directionalMargin, tooltip.size, position_from.size)
-	
-	position_from.add_child(tooltip)
-	
-	# Must do this repositioning after we have added it to the tree.
+
+	tooltip.global_position = position_from.global_position + determineShift(direction, directionalMargin, tooltip.size, position_from.size)
+
 	if forceInBounds: 
 		forceInsideViewport(tooltip)
+	
+	get_tree().root.add_child(tooltip)
 		
 	pass
 
 func _on_mouse_exited():
-	position_from.remove_child(tooltip)
+	get_tree().root.remove_child(tooltip)
 	pass
