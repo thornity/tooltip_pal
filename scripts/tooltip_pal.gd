@@ -12,7 +12,7 @@ enum DirectionEnum {UP, RIGHT, DOWN, LEFT}
 
 # TODO: implement
 @export var hover_time: float
-@export var panel: PackedScene
+@export var panel: PackedScene = preload("res://addons/tooltip_pal/scenes/panels/default_panel.tscn")
 
 var tooltip: Control
 
