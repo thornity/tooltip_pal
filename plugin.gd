@@ -3,7 +3,8 @@ extends EditorPlugin
 
 #region Constants
 
-const TooltipPal: String = "TooltipPal"
+const CUSTOM_TYPE_NAME: String = "TPal"
+const AUTOLOADER_NAME: String = "TPalManager"
 
 #endregion
 
@@ -18,14 +19,15 @@ var editor_panel_instance
 #region Private Functions
 
 func _enter_tree() -> void:
-	add_custom_type(TooltipPal, "Control", preload("res://addons/tooltip_pal/scripts/tooltip_pal.gd"), preload("res://addons/tooltip_pal/icons/comment.svg"))
+	add_custom_type(CUSTOM_TYPE_NAME, "Control", preload("res://addons/tooltip_pal/scripts/tpal.gd"), preload("res://addons/tooltip_pal/icons/comment.svg"))
+	add_autoload_singleton(AUTOLOADER_NAME, "res://addons/tooltip_pal/scripts/autoloader/tpal_autoloader.gd")
 	_make_visible(false)
 
 	connect("scene_changed", _scene_changed)
 
 
 func _exit_tree() -> void:
-	remove_custom_type(TooltipPal)
+	remove_custom_type(CUSTOM_TYPE_NAME)
 
 	remove_control_from_bottom_panel(editor_panel_instance)
 	#editor_panel_instance.queue_free()

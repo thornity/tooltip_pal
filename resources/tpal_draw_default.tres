@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TPalDraw" load_steps=2 format=3 uid="uid://d3e0pe6qmevwu"]
+
+[ext_resource type="Script" path="res://addons/tooltip_pal/scripts/tpal_draw.gd" id="1_0aref"]
+
+[resource]
+script = ExtResource("1_0aref")
+direction = 0
+directionMargin = 0
+forceInBounds = true
+margin_left = 0
+margin_top = 0
+margin_right = 0
+margin_bottom = 0

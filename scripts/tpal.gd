@@ -1,18 +1,18 @@
 @icon("res://addons/tooltip_pal/icons/comment.svg")
 
-class_name TooltipPal
+class_name TPal
 extends Control
+
+var tpal_manager: TPalManager = TPalManager
 
 @export var position_from: Control
 
-enum DirectionEnum {UP, RIGHT, DOWN, LEFT}
-@export var direction: DirectionEnum
-@export var directionalMargin: int
-@export var forceInBounds: bool
+## TODO
+@export var tpal_draw: TPalDraw = preload("res://addons/tooltip_pal/resources/tpal_draw_default.tres")
 
-# TODO: implement
-@export var hover_time: float
-@export var panel: PackedScene = preload("res://addons/tooltip_pal/scenes/panels/default_panel.tscn")
+## TODO
+@export var tpal_oc: TPalOC = preload("res://addons/tooltip_pal/resources/tpal_oc_default.tres")
+
 
 var tooltip: Control
 
@@ -21,23 +21,23 @@ func _ready():
 	connect("mouse_exited", _on_mouse_exited)
 	pass
 
-func determineShift(direction: DirectionEnum, directionalMargin: int, tooltip_panel: Vector2, parent: Vector2) -> Vector2:
+func determineShift(direction: TPalDraw.DirectionEnum, directionMargin: int, tooltip_panel: Vector2, parent: Vector2) -> Vector2:
 	var directionShift = Vector2(0,0)
 	var marginalShift = Vector2(0,0)
 	
 	match direction:
-		DirectionEnum.UP:
+		TPalDraw.DirectionEnum.TOP:
 			directionShift = Vector2(0, -tooltip_panel.y)
-			marginalShift = Vector2(0, -directionalMargin)
-		DirectionEnum.RIGHT:
+			marginalShift = Vector2(0, -directionMargin)
+		TPalDraw.DirectionEnum.RIGHT:
 			directionShift = Vector2(parent.x, 0)
-			marginalShift = Vector2(directionalMargin, 0)
-		DirectionEnum.DOWN:
+			marginalShift = Vector2(directionMargin, 0)
+		TPalDraw.DirectionEnum.BOTTOM:
 			directionShift = Vector2(0, parent.y)
-			marginalShift = Vector2(0, directionalMargin)
-		DirectionEnum.LEFT:
+			marginalShift = Vector2(0, directionMargin)
+		TPalDraw.DirectionEnum.LEFT:
 			directionShift = Vector2(-tooltip_panel.x, 0)
-			marginalShift = Vector2(-directionalMargin, 0)
+			marginalShift = Vector2(-directionMargin, 0)
 
 	return directionShift + marginalShift
 
@@ -57,7 +57,7 @@ func forceInsideViewport(tooltip):
 		tooltip.global_position.y = get_viewport_rect().size.y - tooltip.size.y
 
 func _on_mouse_entered():
-	tooltip = panel.instantiate() as Control
+	tooltip = tpal_oc.panel.instantiate() as Control
 	
 	if position_from != null:
 		tooltip.global_position = position_from.global_position
@@ -65,15 +65,15 @@ func _on_mouse_entered():
 	else:
 		position_from = get_parent()
 
-	tooltip.global_position = position_from.global_position + determineShift(direction, directionalMargin, tooltip.size, position_from.size)
+	tooltip.global_position = position_from.global_position + determineShift(tpal_draw.direction, tpal_draw.directionMargin, tooltip.size, position_from.size)
 
-	if forceInBounds: 
+	if tpal_draw.forceInBounds: 
 		forceInsideViewport(tooltip)
 	
-	get_tree().root.add_child(tooltip)
+	tpal_manager.add_child(tooltip)
 		
 	pass
 
 func _on_mouse_exited():
-	get_tree().root.remove_child(tooltip)
+	tpal_manager.remove_child(tooltip)
 	pass
