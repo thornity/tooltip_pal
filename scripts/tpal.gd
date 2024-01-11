@@ -19,7 +19,9 @@ var tooltip: Control
 func _ready():
 	connect("mouse_entered", _on_mouse_entered)
 	connect("mouse_exited", _on_mouse_exited)
-	pass
+	
+	tooltip = tpal_oc.panel.instantiate() as Control
+
 
 func determineShift(direction: TPalDraw.DirectionEnum, directionMargin: int, tooltip_panel: Vector2, parent: Vector2) -> Vector2:
 	var directionShift = Vector2(0,0)
@@ -57,8 +59,6 @@ func forceInsideViewport(tooltip):
 		tooltip.global_position.y = get_viewport_rect().size.y - tooltip.size.y
 
 func _on_mouse_entered():
-	tooltip = tpal_oc.panel.instantiate() as Control
-	
 	if position_from != null:
 		tooltip.global_position = position_from.global_position
 		pass
