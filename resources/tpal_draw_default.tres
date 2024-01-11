@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="TPalDraw" load_steps=2 format=3 uid="uid://d3e0pe6qmevwu"]
+[gd_resource type="Resource" script_class="TPalDraw" load_steps=3 format=3 uid="uid://d3e0pe6qmevwu"]
 
 [ext_resource type="Script" path="res://addons/tooltip_pal/scripts/tpal_draw.gd" id="1_0aref"]
+[ext_resource type="PackedScene" uid="uid://x33rbp2j1pp8" path="res://addons/tooltip_pal/scenes/panels/default_panel.tscn" id="1_5awoc"]
 
 [resource]
 script = ExtResource("1_0aref")
 direction = 0
+panel = ExtResource("1_5awoc")
 directionMargin = 0
-forceInBounds = true
+force_in_bounds = true
 margin_left = 0
 margin_top = 0
 margin_right = 0

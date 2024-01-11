@@ -8,14 +8,6 @@ const AUTOLOADER_NAME: String = "TPalManager"
 
 #endregion
 
-
-#region Variables
-
-var editor_panel_instance
-
-#endregion
-
-
 #region Private Functions
 
 func _enter_tree() -> void:
@@ -28,8 +20,6 @@ func _enter_tree() -> void:
 
 func _exit_tree() -> void:
 	remove_custom_type(CUSTOM_TYPE_NAME)
-
-	remove_control_from_bottom_panel(editor_panel_instance)
 	#editor_panel_instance.queue_free()
 #	if framed_viewfinder_panel_instance:
 	disconnect("scene_changed", _scene_changed)
@@ -40,12 +30,11 @@ func _exit_tree() -> void:
 
 
 func _make_visible(visible):
-	if editor_panel_instance:
-		editor_panel_instance.set_visible(visible)
+	pass
 
 
 func _scene_changed(scene_root: Node) -> void:
-	editor_panel_instance.viewfinder.scene_changed(scene_root)
+	pass
 
 #endregion
 
