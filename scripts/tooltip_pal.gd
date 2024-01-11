@@ -19,6 +19,12 @@ var tooltip: Control
 func _ready():
 	connect("mouse_entered", _on_mouse_entered)
 	connect("mouse_exited", _on_mouse_exited)
+
+	if(panel):
+		tooltip = panel.instantiate() as Control
+	else:
+		push_warning('Panel is unassigned, no tooltip to display')
+
 	pass
 
 func determineShift(direction: DirectionEnum, directionalMargin: int, tooltip_panel: Vector2, parent: Vector2) -> Vector2:
@@ -57,7 +63,7 @@ func forceInsideViewport(tooltip):
 		tooltip.global_position.y = get_viewport_rect().size.y - tooltip.size.y
 
 func _on_mouse_entered():
-	tooltip = panel.instantiate() as Control
+	if(tooltip == null): return
 	
 	if position_from != null:
 		tooltip.global_position = position_from.global_position
@@ -76,5 +82,6 @@ func _on_mouse_entered():
 	pass
 
 func _on_mouse_exited():
+	if(tooltip == null): return
 	position_from.remove_child(tooltip)
 	pass
