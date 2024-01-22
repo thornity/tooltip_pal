@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_0aref")
-direction = 0
+direction = 2
 panel = ExtResource("1_5awoc")
 directionMargin = 0
 force_in_bounds = true

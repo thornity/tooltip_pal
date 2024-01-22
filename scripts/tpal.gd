@@ -19,6 +19,7 @@ func _ready():
 	pass
 
 func _on_mouse_entered():
+	TPalManager.tpal_mouse_enter.emit()
 	
 	var position_from: Node
 	
@@ -26,13 +27,15 @@ func _on_mouse_entered():
 		position_from = self.position_from
 	else:
 		position_from = get_parent()
+
 	
-	tpal_manager.add_child(
-		tpal_draw.panel_stuff(position_from)
-	)
+	#var screen_coord = get_viewport().get_screen_transform() * get_global_transform_with_canvas() * position_from.
+	
+	tpal_oc.mouse_enter(tpal_draw.generate_tpal(position_from))
+	
 		
 	pass
 
 func _on_mouse_exited():
-	tpal_draw.tooltip.queue_free()
+	tpal_oc.mouse_exit(tpal_draw.tooltip)
 	pass
