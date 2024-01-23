@@ -52,23 +52,6 @@ func force_inside_viewport(tooltip):
 func generate_tpal() -> Control:
 	return panel.instantiate()
 
-#func generate_tpal(position_from: Node, destinationTransform: Transform2D) -> Control:
-	#
-	#var final_position := Vector2(0,0)
-	#if position_from.position:
-		#var transform := position_from.get_viewport().get_final_transform()
-		#final_position = transform.affine_inverse() * position_from.position
-	#
-	#tooltip = panel.instantiate() as Control
-	#tooltip.position = (final_position * destinationTransform) + determineShift(direction, directionMargin, tooltip.size, position_from_size(position_from))
-#
-	#if position_from.has_method("get_screen_position"):
-		#print_debug(position_from.get_screen_position())
-#
-	#if force_in_bounds: 
-		#force_inside_viewport(tooltip)
-		#
-	#return tooltip
 
 func position_from_size(position_from: Node) -> Vector2:
 	var position_from_size = Vector2(0,0)

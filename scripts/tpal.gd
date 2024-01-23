@@ -41,11 +41,12 @@ func _on_mouse_entered():
 	var target_local_position = position_from.position * origin_transform
 	
 	
+	
+	tpal.position = target_local_position
+
 	# I did not verify if this works
 	if tpal_draw.force_in_bounds: 
 		tpal_draw.force_inside_viewport(tpal)
-	
-	tpal.position = target_local_position
 
 	
 	#Temporary hack to remove the tooltip when leaving
