@@ -49,17 +49,9 @@ func force_inside_viewport(tooltip):
 	if tooltipEndPos.y > viewport.y:
 		tooltip.global_position.y = viewport.y - tooltip.size.y
 
-func generate_tpal(position_from: Node) -> Control:
-	tooltip = panel.instantiate() as Control
-	tooltip.global_position = position_from.global_position + determineShift(direction, directionMargin, tooltip.size, position_from_size(position_from))
+func generate_tpal() -> Control:
+	return panel.instantiate()
 
-	if position_from.has_method("get_screen_position"):
-		print_debug(position_from.get_screen_position())
-
-	if force_in_bounds: 
-		force_inside_viewport(tooltip)
-		
-	return tooltip
 
 func position_from_size(position_from: Node) -> Vector2:
 	var position_from_size = Vector2(0,0)

@@ -8,9 +8,6 @@ class_name TPalOC
 @export var click_exit: bool = false
 
 func mouse_enter(tpal : Control):
-	TPalManager.add_child(
-		tpal
-	)
 	pass
 	
 	
